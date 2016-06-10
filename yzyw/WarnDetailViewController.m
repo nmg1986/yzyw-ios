@@ -7,12 +7,10 @@
 //
 
 #import "WarnDetailViewController.h"
-#import "UMSocial.h"
-#import "UMSocialWechatHandler.h"
 #import "LoginViewController.h"
 
 
-@interface WarnDetailViewController ()<UITableViewDataSource,UITableViewDelegate,UMSocialUIDelegate>
+@interface WarnDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong)NSDictionary *item;
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIButton *backBtn;

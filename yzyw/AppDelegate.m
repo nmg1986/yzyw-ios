@@ -7,16 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import <AlipaySDK/AlipaySDK.h>
-#import "WXApi.h"
-//#import <MobClick.h>
-#import "UMSocial.h"
-
-
 #import "LoginViewController.h"
-
-@interface AppDelegate ()<WXApiDelegate>
-@end
 
 @implementation AppDelegate
 
@@ -85,20 +76,6 @@
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-    
-    if ([url.absoluteString hasPrefix:@"wxedddf5c468bfd955://pay"]){
-        
-        return [WXApi handleOpenURL:url delegate:self];
-
-        
-    }else{
-        
-        //跳转支付宝钱包进行支付，处理支付结果
-        [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            NSLog(@"result = %@",resultDic);
-        }];
-    }
-    
 
     return YES;
 }
