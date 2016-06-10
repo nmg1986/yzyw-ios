@@ -12,14 +12,7 @@
 //#import <MobClick.h>
 #import "UMSocial.h"
 
-//#import "HomeViewController.h"
-#import "UserViewController.h"
-//#import "FrtViewController.h"
-//#import "SptViewController.h"
-#import "EspSaleViewController.h"
-#import "ShoppingCarViewController.h"
-#import "VegViewController.h"
-#import "ComboListViewController.h"
+
 #import "LoginViewController.h"
 
 @interface AppDelegate ()<WXApiDelegate>
@@ -41,9 +34,10 @@
     
     //init app
     //[self initApp];
+    [self login];
     
     //正式
-    [self changeToMainPage];
+//    [self changeToMainPage];
     
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -118,8 +112,6 @@
 
 - (void)registLocalNotification
 {
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(login:) name:@"ERROR403" object:nil];
 }
 
 
@@ -134,174 +126,37 @@
 }
 
 
-#pragma mark - page
-- (void)changeToMainPage
-{
-    
-    UINavigationController *home = [[UINavigationController alloc] initWithRootViewController:VegViewController.new];
-    
-//    UINavigationController *esp = [[UINavigationController alloc] initWithRootViewController:EspSaleViewController.new];
-    UINavigationController *combo = [[UINavigationController alloc] initWithRootViewController:ComboListViewController.new];
-    
-    UINavigationController *car = [[UINavigationController alloc]initWithRootViewController:ShoppingCarViewController.new];
-    
-    UINavigationController *user = [[UINavigationController alloc]initWithRootViewController:UserViewController.new];
-    
-
-//    NSArray *titles = @[@"单品", @"套餐", @"购物车", @"我的"];
-//    NSArray *images = @[@"home_unselected", @"esp_unselected", @"cart_unselected", @"mine_unselected"];
-//    NSArray *selectimages = @[@"home_selected",@"esp_selected", @"cart_selected",@"mine_selected"];
-    
-    NSArray *titles = @[@"首页", @"购物车", @"我的"];
-    NSArray *images = @[@"home_unselected", @"cart_unselected", @"mine_unselected"];
-    NSArray *selectimages = @[@"home_selected",@"cart_selected",@"mine_selected"];
-    
-    _tabbarController = [[UITabBarController alloc] init];
-//    _tabbarController.viewControllers = @[home,combo,car,user];
-    _tabbarController.viewControllers = @[home,car,user];
-    [_tabbarController ew_configTabBarItemWithTitles:titles font:FONT(12) titleColor:RGB_COLOR(164, 162, 154) selectedTitleColor:RGB_COLOR(17,194, 88) images:images selectedImages:selectimages barBackgroundImage:nil];
-    
-    self.window.rootViewController = _tabbarController;
-}
-
-
-#pragma mark - InitApp
-- (void)initApp
-{
-    NSInteger flag = [[EWUtils getObjectForKey:SHOULDINIT] integerValue];
-    if (flag == 0) {
-        
-        [HTTPManager appInitSuccess:^(id response) {
-            if ([response[@"init"] integerValue] == 1) {
-                
-            }else{
-                DBLog(@"初始化失败~");
-            }
-
-        } failure:^(NSError *err) {
-            DBError(err);
-
-        }];
-    }else{
-        [EWUtils loadCookies];
-    }
-
-}
-
-
-#pragma mark - wechat paty
-//支付跳转回到 app 后带有支付状态
-- (void) onResp:(BaseResp*)resp
-{
-    
-    PayResp *response = (PayResp *)resp;
-    
-    switch (response.errCode)
-    {
-        case WXSuccess:
-            
-            //支付成功,进一步写相关逻辑
-            
-            POSTNOTIFICATION(@"WXPAYRESULT", @"0");
-            
-            break;
-            
-        case WXErrCodeUserCancel:
-            //用户中途取消支付
-            POSTNOTIFICATION(@"WXPAYRESULT", @"-2");
-
-            break;
-            
-        case WXErrCodeCommon:
-        case WXErrCodeAuthDeny:
-        case WXErrCodeSentFail:
-        case WXErrCodeUnsupport:
-            //支付失败!
-            POSTNOTIFICATION(@"WXPAYRESULT", @"-5");
-
-            break;
-            
-        default:
-            break;
-    }
-    
-}
-
+//#pragma mark - page
+//- (void)changeToMainPage
+//{
+//    
+//    UINavigationController *home = [[UINavigationController alloc] initWithRootViewController:VegViewController.new];
+//    
+//    UINavigationController *car = [[UINavigationController alloc]initWithRootViewController:ShoppingCarViewController.new];
+//    
+//    UINavigationController *user = [[UINavigationController alloc]initWithRootViewController:UserViewController.new];
+//    
+//    NSArray *titles = @[@"集群", @"应用", @"告警"];
+//    NSArray *images = @[@"home_unselected", @"cart_unselected", @"mine_unselected"];
+//    NSArray *selectimages = @[@"home_selected",@"cart_selected",@"mine_selected"];
+//    
+//    _tabbarController = [[UITabBarController alloc] init];
+////    _tabbarController.viewControllers = @[home,combo,car,user];
+//    _tabbarController.viewControllers = @[home,car,user];
+//    [_tabbarController ew_configTabBarItemWithTitles:titles font:FONT(12) titleColor:RGB_COLOR(164, 162, 154) selectedTitleColor:RGB_COLOR(17,194, 88) images:images selectedImages:selectimages barBackgroundImage:nil];
+//    
+//    self.window.rootViewController = _tabbarController;
+//}
+//
 
 
 #pragma mark - app update
-- (void)appUpdate
+
+- (void)login
 {
-    [HTTPManager updateWithSuccess:^(id response) {
-        
-        DBLog(@"----response=%@",response);
-        if (response[@"errmesg"] != nil) {
-            
-        }else{
-            
-            if ([VGUtils isNeedUpdate:response[@"version"]]) {
-                
-                if ([response[@"status"] integerValue] == 1) {
-                    DBLog(@"可更新");
-                    
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"应用升级" message:response[@"change"] delegate:nil cancelButtonTitle:@"更新" otherButtonTitles:@"取消", nil];
-                    
-                    [alert showAlertWithBlock:^(NSInteger buttonIndex) {
-                        
-                        if (buttonIndex == 1) {
-                            
-                            [EWUtils ew_jumpToAppleStore];
-                        }
-                        
-                    }];
-                    
-                    
-                }else if ([response[@"status"] integerValue] == 2){
-                    DBLog(@"强制更新");
-                    
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"应用升级" message:response[@"change"] delegate:nil cancelButtonTitle:@"更新" otherButtonTitles:nil, nil];
-                    
-                    [alert showAlertWithBlock:^(NSInteger buttonIndex) {
-
-                        [EWUtils ew_jumpToAppleStore];
-
-                        
-                    }];
-
-                }
-                
-            }
-            
-        }
-        
-    } failure:^(NSError *err) {
-        
-    }];
-}
-
-
-- (void)loginWithWX:(UIViewController *)controller
-{
-    SendAuthReq* req = [[SendAuthReq alloc] init] ;
-    req.scope = @"snsapi_userinfo"; // @"post_timeline,sns"
-    req.state = @"MyVillage";
-    
-    [WXApi sendAuthReq:req viewController:controller delegate:self];
-    
-}
-
-
-
-#pragma mark - handle login
-- (void)login:(NSNotification *)noti
-{
-    UINavigationController *nav = [self.tabbarController selectedViewController];
-    
-    UIViewController *controller = nav.viewControllers.lastObject;
-    
     UINavigationController *navLogin = [[UINavigationController alloc] initWithRootViewController:[LoginViewController new]];
-    [controller presentViewController:navLogin animated:YES completion:nil];
+//    [self presentViewController:navLogin animated:YES completion:nil];
+    self.window.rootViewController = navLogin;
 }
-
 
 @end
