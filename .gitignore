@@ -1,3 +1,6 @@
 .DS_Store
 yzyw.xcworkspace/*
 yzyw/Images/.DS_Store
+yzyw/.DS_Store
+yzyw.xcodeproj/project.pbxproj
+Pods/Pods.xcodeproj/xcuserdata/niuminguo.xcuserdatad/xcschemes/xcschememanagement.plist
