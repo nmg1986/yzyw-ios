@@ -456,6 +456,7 @@
 		EFA648211D0AD2BE009A9ADF /* EWLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA648071D0AD2BE009A9ADF /* EWLocationManager.m */; };
 		EFA648221D0AD2BE009A9ADF /* EWModelParse.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6480A1D0AD2BE009A9ADF /* EWModelParse.m */; };
 		EFA648231D0AD2BE009A9ADF /* EWUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA6480C1D0AD2BE009A9ADF /* EWUtils.m */; };
+		EFA648251D0AFCB1009A9ADF /* NewAppCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EFA648241D0AFCB1009A9ADF /* NewAppCell.m */; };
 		EFA9FD751C6E214A0090F3DF /* esp_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EFA9FD711C6E214A0090F3DF /* esp_selected@2x.png */; };
 		EFA9FD761C6E214A0090F3DF /* esp_selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EFA9FD721C6E214A0090F3DF /* esp_selected@3x.png */; };
 		EFA9FD771C6E214A0090F3DF /* esp_unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EFA9FD731C6E214A0090F3DF /* esp_unselected@2x.png */; };
@@ -970,6 +971,8 @@
 		EFA6480A1D0AD2BE009A9ADF /* EWModelParse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EWModelParse.m; sourceTree = "<group>"; };
 		EFA6480B1D0AD2BE009A9ADF /* EWUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EWUtils.h; sourceTree = "<group>"; };
 		EFA6480C1D0AD2BE009A9ADF /* EWUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EWUtils.m; sourceTree = "<group>"; };
+		EFA648241D0AFCB1009A9ADF /* NewAppCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewAppCell.m; sourceTree = "<group>"; };
+		EFA648271D0AFDA8009A9ADF /* NewAppCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewAppCell.h; sourceTree = "<group>"; };
 		EFA9FD711C6E214A0090F3DF /* esp_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "esp_selected@2x.png"; sourceTree = "<group>"; };
 		EFA9FD721C6E214A0090F3DF /* esp_selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "esp_selected@3x.png"; sourceTree = "<group>"; };
 		EFA9FD731C6E214A0090F3DF /* esp_unselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "esp_unselected@2x.png"; sourceTree = "<group>"; };
@@ -1080,6 +1083,8 @@
 				EFA645EE1D0ACDD3009A9ADF /* NewViewController.h */,
 				EFA6477F1D0AD263009A9ADF /* KeyBoard */,
 				EFA645EF1D0ACDD3009A9ADF /* NewViewController.m */,
+				EFA648241D0AFCB1009A9ADF /* NewAppCell.m */,
+				EFA648271D0AFDA8009A9ADF /* NewAppCell.h */,
 				EFA6466A1D0ACDD3009A9ADF /* WarnCell.h */,
 				EFA6466B1D0ACDD3009A9ADF /* WarnCell.m */,
 				EFA6466C1D0ACDD3009A9ADF /* WarnDetailViewController.h */,
@@ -2410,6 +2415,7 @@
 				EFE109831C6DED2F004A869F /* AppDelegate.m in Sources */,
 				EFA648181D0AD2BE009A9ADF /* EWFocusView.m in Sources */,
 				EFA647451D0ACDD3009A9ADF /* NewViewController.m in Sources */,
+				EFA648251D0AFCB1009A9ADF /* NewAppCell.m in Sources */,
 				EFA6481F1D0AD2BE009A9ADF /* UIView+Extension.m in Sources */,
 				EFA648101D0AD2BE009A9ADF /* NSString+Extension.m in Sources */,
 				EFA646721D0ACDD3009A9ADF /* AppViewController.m in Sources */,

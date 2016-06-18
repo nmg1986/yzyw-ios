@@ -1,9 +1,9 @@
 
 #import "NewViewController.h"
 #import "LoginViewController.h"
-#import "AppDetailViewController.h"
+#import "NewAppCell.h"
 
-#define CELL_HEIGHT   222/2.0
+#define CELL_HEIGHT   60
 #define BOTTOM_HEIGHT 60
 #define FREIGHT 10
 #define PRICE_LIMIT 49
@@ -14,10 +14,15 @@
 @property (nonatomic, strong) NSMutableArray *listData;
 @property (nonatomic, strong) AddressInfo *address;
 
-@property (nonatomic, strong) NSString *markMessage;
+@property (nonatomic, strong)  NSString *markMessage;
 
 //@property (nonatomic, strong) UIView *emptyView;
 @property (nonatomic, strong) UIButton *loginBtn;
+
+@property (nonatomic, strong) UILabel *name;
+@property (nonatomic, strong) UITextField *nameLabel;
+@property (nonatomic, strong) UITextField *textField;
+
 
 @property (nonatomic) UIEdgeInsets separatorInset NS_AVAILABLE_IOS(7_0) UI_APPEARANCE_SELECTOR;
 
@@ -72,23 +77,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    // Return the number of rows in the section.
-    if(section == 0) {
-        return _listData.count;
-    }else if(section == 1) {
-        return 0;
-    }else{
-        return 2;
-    }
+    return 7;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        return CELL_HEIGHT;
-    }
-    return 40;
+       return CELL_HEIGHT;
 }
 
 
@@ -108,30 +103,131 @@
     return view;
 }
 
-
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    
-    
-    static NSString *CellIdentifier = @"BEIZHUCELL";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    static NSString *cellIndentifier = @"APPCELL";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndentifier];
     }
     
-    cell.textLabel.text = nil;
-    cell.detailTextLabel.text = nil;
+    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
     
-    cell.textLabel.font = FONT(14);
-    cell.detailTextLabel.font = FONT(14);
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+    [tableView setSeparatorColor:[UIColor colorWithRed:242.0/255.0f green:242.0/255.0f blue:242.0/255.0f alpha:1.0]];
     
     
-    
+    switch (indexPath.row) {
+        case 0:
+            _nameLabel = [[UITextField alloc] initWithFrame:CGRectZero];
+            _nameLabel.text = @"应用名称";
+            _nameLabel.font = FONT(16);
+            _nameLabel.textColor = RGB_COLOR(57, 57, 57);
+            _textField = [[UITextField alloc] initWithFrame:CGRectZero];
+            _textField.font = FONT(16);
+            _nameLabel.frame = CGRectMake(15, 0, 70, CELL_HEIGHT);
+            _textField.frame = CGRectMake(_nameLabel.right + 5,
+                                          0,
+                                          SCREEN_WIDTH - _nameLabel.right - 5,
+                                          CELL_HEIGHT);
+            [cell addSubview:_nameLabel];
+            [cell addSubview:_textField];
+            
+            break;
+        
+        case 1:
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            _nameLabel = [[UITextField alloc] initWithFrame:CGRectZero];
+            _nameLabel.text = @"选择集群";
+            _nameLabel.font = FONT(16);
+            _nameLabel.textColor = RGB_COLOR(57, 57, 57);
+            _nameLabel.frame = CGRectMake(15, 0, 70, CELL_HEIGHT);
+            
+            [cell addSubview:_nameLabel];
+            
+            break;
+        
+        case 2:
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            _nameLabel = [[UITextField alloc] initWithFrame:CGRectZero];
+            _nameLabel.text = @"镜像地址";
+            _nameLabel.font = FONT(16);
+            _nameLabel.textColor = RGB_COLOR(57, 57, 57);
+            _nameLabel.frame = CGRectMake(15, 0, 70, CELL_HEIGHT);
+            
+            [cell addSubview:_nameLabel];
+            break;
+            
+        case 3:
+            _nameLabel = [[UITextField alloc] initWithFrame:CGRectZero];
+            _nameLabel.text = @"镜像版本";
+            _nameLabel.font = FONT(16);
+            _nameLabel.textColor = RGB_COLOR(57, 57, 57);
+            _textField = [[UITextField alloc] initWithFrame:CGRectZero];
+            _textField.font = FONT(16);
+            _nameLabel.frame = CGRectMake(15, 0, 70, CELL_HEIGHT);
+            _textField.frame = CGRectMake(_nameLabel.right + 5,
+                                          0,
+                                          SCREEN_WIDTH - _nameLabel.right - 5,
+                                          CELL_HEIGHT);
+            [cell addSubview:_nameLabel];
+            [cell addSubview:_textField];
+            
+            break;
+
+        case 4:
+            _nameLabel = [[UITextField alloc] initWithFrame:CGRectZero];
+            _nameLabel.text = @"网络模式";
+            _nameLabel.font = FONT(16);
+            _nameLabel.textColor = RGB_COLOR(57, 57, 57);
+            _nameLabel.frame = CGRectMake(15, 0, 70, CELL_HEIGHT);
+            [cell addSubview:_nameLabel];
+            
+            break;
+            
+        case 5:
+            _textField = [[UITextField alloc] initWithFrame:CGRectZero];
+            _textField.font = FONT(16);
+            _textField.placeholder = @"容器规格";
+            _textField.frame = CGRectMake(15, 0, SCREEN_WIDTH, CELL_HEIGHT);
+            [cell addSubview:_textField];
+            
+            break;
+        
+        case 6:
+            _textField = [[UITextField alloc] initWithFrame:CGRectZero];
+            _textField.font = FONT(16);
+            _textField.placeholder = @"容器个数";
+            _textField.frame = CGRectMake(15, 0, SCREEN_WIDTH, CELL_HEIGHT);
+            [cell addSubview:_textField];
+            
+            break;
+
+        default:
+            break;
+    }
     return cell;
-    
 }
 
 
@@ -139,7 +235,7 @@
 - (UITableView *)listView
 {
     if (!_listView) {
-        _listView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
+        _listView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-110) style:UITableViewStylePlain];
         _listView.dataSource = self;
         _listView.delegate = self;
         _listView.backgroundColor = TABLE_COLOR;
@@ -151,7 +247,17 @@
     return _listView;
 }
 
-- (void)showNotLoginPage
+- (UILabel *)name
+{
+    if (!_name) {
+        _name = [[UILabel alloc] initWithFrame:CGRectZero];
+        _name.font = FONT(16);
+        _name.numberOfLines = 0;
+        _name.backgroundColor = CLEAR_COLOR;
+    }
+    
+    return _name;
+}- (void)showNotLoginPage
 {
 }
 @end

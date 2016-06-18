@@ -82,7 +82,7 @@
     
     UINavigationController *warn = [[UINavigationController alloc]initWithRootViewController:WarnViewController.new];
     
-    NSArray *titles = @[@"应用", @"新建", @"告警"];
+    NSArray *titles = @[@"应用", @"发布", @"告警"];
     NSArray *images = @[@"home_unselected", @"cart_unselected", @"mine_unselected"];
     NSArray *selectimages = @[@"home_selected",@"cart_selected",@"mine_selected"];
     
@@ -100,26 +100,35 @@
 - (void)submit:(UIButton *)sender
 {
     [self.view endEditing:YES];
+      [self changeToMainPage];
     
-    if ([_username hasText] && [_password hasText]){
-        
-        [self showLoading];
-        [HTTPManager login: [_username text]
-                    passwd: [_password text]
-                   success:^(id response) {
-                       DBLog(@"%@", response);
-                       [self hideLoading];
-                       [self changeToMainPage];
-                   } failure:^(NSError *err) {
-                       [self hideLoading];
-                       [self showFailureStatusWithTitle:@"服务器繁忙，请稍后重试"];
-                   }];
-        
-    }else{
-        if (! [_username hasText] || ! [_password hasText]){
-            [self showErrorStatusWithTitle:@"用户名或密码不能为空"];
-        }
-}
+//    if ([_username hasText] && [_password hasText]){
+//        
+//        [self showLoading];
+//        [HTTPManager login: [_username text]
+//                    passwd: [_password text]
+//                   success:^(id response) {
+//                       DBLog(@"%@", response);
+//                       [self hideLoading];
+//                       if ([response[@"code"] integerValue]){
+//                           [self showErrorStatusWithTitle:@"用户名或密码错误"];
+//                           
+//                       }
+//                       else{
+//                           [self changeToMainPage];
+//                       }
+//                       
+//                   } failure:^(NSError *err) {
+//                       [self hideLoading];
+//                       [self showFailureStatusWithTitle:@"服务器繁忙，请稍后重试"];
+//                   }];
+//        
+//    }else{
+//        if (! [_username hasText] || ! [_password hasText]){
+//          
+//            [self showErrorStatusWithTitle:@"用户名或密码不能为空"];
+//        }
+//}
     
     
    
